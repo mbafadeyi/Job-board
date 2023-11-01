@@ -10,3 +10,7 @@ class JobListView(generics.ListAPIView):
 
     def get_queryset(self):
         return Job.objects.all()
+
+
+class JobCreateView(generics.CreateAPIView):
+    serializer_class = JobSerializer
