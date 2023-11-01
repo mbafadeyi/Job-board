@@ -1,5 +1,5 @@
 from rest_framework import generics
-from rest_framework.permissions import AllowAny
+from rest_framework.permissions import AllowAny, IsAuthenticated
 
 from job_board.jobs.models import Job
 
@@ -16,7 +16,7 @@ class JobListView(generics.ListAPIView):
 
 class JobCreateView(generics.CreateAPIView):
     serializer_class = JobSerializer
-    permission_classes = (AllowAny,)
+    permission_classes = (IsAuthenticated,)
 
     def perform_create(self, serializer):
         serializer.save(user=self.request.user)
