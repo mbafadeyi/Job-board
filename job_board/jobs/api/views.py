@@ -1,4 +1,5 @@
 from rest_framework import generics
+from rest_framework.permissions import AllowAny
 
 from job_board.jobs.models import Job
 
@@ -7,6 +8,7 @@ from .serializers import JobSerializer
 
 class JobListView(generics.ListAPIView):
     serializer_class = JobSerializer
+    permission_classes = (AllowAny,)
 
     def get_queryset(self):
         return Job.objects.filter(available=True)

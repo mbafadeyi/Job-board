@@ -1,5 +1,26 @@
+import axios from "axios";
+import { useEffect, useState } from "react";
+
 function App() {
-  return <div>Hello World!</div>;
+  const [jobs, setJobs] = useState(null);
+
+  useEffect(() => {
+    function fetchJobs() {
+      axios.get("http://127.0.0.1:8000/api/jobs/").then((res) => {
+        console.log(res.data);
+        setJobs(res.data);
+      });
+    }
+    fetchJobs();
+  }, []);
+  return (
+    <div>
+      {jobs &&
+        jobs.map((job, i) => {
+          <div key={i}> a new job</div>;
+        })}
+    </div>
+  );
 }
 
 export default App;
