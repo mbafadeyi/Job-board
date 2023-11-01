@@ -7,6 +7,7 @@ class Job(models.Model):
     remote = models.BooleanField(default=False)
     salary = models.PositiveIntegerField()
     date_created = models.DateTimeField(auto_now_add=True)
+    available = models.BooleanField(default=True)
 
     def __str__(self):
         return self.title

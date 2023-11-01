@@ -17,7 +17,8 @@ app_name = "api"
 
 urlpatterns = [
     path("jobs/", views.JobListView.as_view()),
-    path("create-job/", views.JobCreateView.as_view()),
+    path("jobs/<pk>/", views.JobUpdateView.as_view()),
+    path("create-job/<pk>/", views.JobCreateView.as_view()),
 ]
 
 urlpatterns += router.urls

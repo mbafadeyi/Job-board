@@ -11,6 +11,7 @@ class JobSerializer(ModelSerializer):
             "location",
             "remote",
             "salary",
+            "available",
             "date_created",
         )
         read_only_fields = ("date_created",)
