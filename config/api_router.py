@@ -17,7 +17,9 @@ app_name = "api"
 
 urlpatterns = [
     path("jobs/", views.JobListView.as_view()),
-    path("jobs/<pk>/", views.JobUpdateView.as_view()),
+    path("jobs/<pk>/", views.JobDetailView.as_view()),
+    path("jobs/<pk>/update/", views.JobUpdateView.as_view()),
+    path("jobs/<pk>/delete/", views.JobDeleteView.as_view()),
     path("create-job/", views.JobCreateView.as_view()),
 ]
 

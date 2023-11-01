@@ -19,8 +19,20 @@ class JobCreateView(generics.CreateAPIView):
         serializer.save(user=self.request.user)
 
 
+class JobDetailView(generics.RetrieveAPIView):
+    serializer_class = JobSerializer
+
+    def get_queryset(self):
+        return Job.objects.all()
+
+
 class JobUpdateView(generics.UpdateAPIView):
     serializer_class = JobSerializer
 
     def get_queryset(self):
         return Job.objects.filter(available=True)
+
+
+class JobDeleteView(generics.DestroyAPIView):
+    def get_queryset(self):
+        return Job.objects.all()

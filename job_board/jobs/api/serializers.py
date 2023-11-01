@@ -7,6 +7,7 @@ class JobSerializer(ModelSerializer):
     class Meta:
         model = Job
         fields = (
+            "id",
             "title",
             "user",
             "company_name",
