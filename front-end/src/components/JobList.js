@@ -1,7 +1,7 @@
 import axios from "axios";
 import { useEffect, useState } from "react";
+import { NavLink } from "react-router-dom";
 import { API } from "../api";
-
 export function JobList() {
   const [jobs, setJobs] = useState(null);
 
@@ -14,14 +14,17 @@ export function JobList() {
     }
     fetchJobs();
   }, []);
+
   return (
     <div>
+      {!jobs && "Loading..."}
       {jobs &&
         jobs.map((job, i) => {
           return (
             <div key={i}>
-              {" "}
-              Job #{job.id}: {job.title}{" "}
+              <NavLink to={`/jobs/${job.id}`}>
+                Job #{job.id}: {job.title}
+              </NavLink>
             </div>
           );
         })}

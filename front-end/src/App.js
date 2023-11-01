@@ -1,6 +1,7 @@
 import React from "react";
 import { BrowserRouter as Router, Routes, Route, Link } from "react-router-dom";
 import { JobList } from "./components/JobList";
+import { JobDetail } from "./components/JobDetail";
 
 export default function App() {
   return (
@@ -22,9 +23,10 @@ export default function App() {
 
         {/* A <Routes> looks through its children <Route>s and renders the first one that matches the current URL. */}
         <Routes>
-          <Route path="/about" element={<About />}></Route>
-          <Route path="/users" element={<Users />}></Route>
-          <Route path="/" element={<JobList />}></Route>
+          <Route path="/about" element={<About />} />
+          <Route path="/users" element={<Users />} />
+          <Route path="/jobs/:id" element={<JobDetail />} />
+          <Route path="/" element={<JobList />} exact />
         </Routes>
       </div>
     </Router>
