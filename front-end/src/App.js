@@ -6,6 +6,7 @@ import { JobList } from "./components/JobList";
 import { AuthContextProvider } from "./contexts/AuthContext";
 import { Login } from "./components/Login";
 import { Navbar } from "./components/Navbar";
+import { JobUpdate } from "./components/JobUpdate";
 
 export default function App() {
   return (
@@ -18,7 +19,8 @@ export default function App() {
           <Routes>
             <Route path="/about" element={<About />} />
             <Route path="/users" element={<Users />} />
-            <Route path="/jobs/:id" element={<JobDetail />} />
+            <Route path="/jobs/:id" element={<JobDetail />} exact />
+            <Route path="/jobs/:id/update" element={<JobUpdate />} exact />
             <Route path="/create-job" element={<JobCreate />} exact />
             <Route path="/login" element={<Login />} exact />
             <Route path="/" element={<JobList />} exact />

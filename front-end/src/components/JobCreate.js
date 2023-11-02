@@ -1,7 +1,7 @@
-import { useState, useEffect, useContext } from "react";
-import { API } from "../api";
 import axios from "axios";
-import { Formik, Field, Form } from "formik";
+import { Field, Form, Formik } from "formik";
+import { useContext, useState } from "react";
+import { API } from "../api";
 import { AuthContext } from "../contexts/AuthContext";
 
 export function JobCreate() {
@@ -11,7 +11,6 @@ export function JobCreate() {
   } = useContext(AuthContext);
 
   function handleSubmit(values) {
-    console.log(values);
     setLoading(true);
     axios
       .post(API.jobs.create, values, {

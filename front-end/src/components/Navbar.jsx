@@ -4,7 +4,7 @@ import { AuthContext } from "../contexts/AuthContext";
 
 export function Navbar() {
   const { user } = useContext(AuthContext);
-  //   console.log(auth);
+    console.log(user);
 
   return (
     <nav>

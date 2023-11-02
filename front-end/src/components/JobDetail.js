@@ -1,7 +1,7 @@
-import { useState, useEffect } from "react";
-import { API } from "../api";
 import axios from "axios";
-import { useParams } from "react-router-dom";
+import { useEffect, useState } from "react";
+import { NavLink, useParams } from "react-router-dom";
+import { API } from "../api";
 
 export function JobDetail() {
   const [job, setJob] = useState(null);
@@ -24,6 +24,7 @@ export function JobDetail() {
         <div>
           <h1>{job.title}</h1>
           <h3>{job.salary}</h3>
+          <NavLink to={`/jobs/${id}/update`}>Update</NavLink>
         </div>
       )}
     </div>
