@@ -14,6 +14,8 @@ import { Login } from "./components/Login";
 import { Navbar } from "./components/Navbar";
 import { AuthContext, AuthContextProvider } from "./contexts/AuthContext";
 import { useContext } from "react";
+import { Signup } from "./components/Signup";
+import { ConfirmEmail } from "./components/ConfirmEmail";
 
 function PrivateRoute(children) {
   const { user } = useContext(AuthContext);
@@ -69,6 +71,12 @@ export default function App() {
                 exact
               />
               <Route path="/login" element={<Login />} exact />
+              <Route path="/signup" element={<Signup />} exact />
+              <Route
+                path="/accounts/confirm-email/:key"
+                element={<ConfirmEmail />}
+                exact
+              />
               <Route path="/" element={<JobList />} exact />
             </Routes>
           </div>

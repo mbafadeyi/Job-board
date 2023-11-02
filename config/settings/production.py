@@ -170,3 +170,4 @@ SPECTACULAR_SETTINGS["SERVERS"] = [  # noqa: F405
 ]
 # Your stuff...
 # ------------------------------------------------------------------------------
+FRONTEND_URL = "https://jobs.job-boards.com"

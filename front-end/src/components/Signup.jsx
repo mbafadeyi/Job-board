@@ -1,22 +1,19 @@
 import axios from "axios";
 import { Field, Form, Formik } from "formik";
-import { useContext, useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { useState } from "react";
 import { API } from "../api";
-import { AuthContext } from "../contexts/AuthContext";
 
-export function Login() {
-  const navigate = useNavigate();
+export function Signup() {
   const [loading, setLoading] = useState(false);
-  const { login } = useContext(AuthContext);
+  const [success, setSuccess] = useState(false);
 
-  function handleSubmit(values) {
+  function handleSubmit(values, { resetForm }) {
     setLoading(true);
     axios
-      .post(API.auth.login, values)
+      .post(API.auth.signup, values)
       .then((res) => {
-        login(res.data.key);
-        navigate(`/`);
+        resetForm();
+        setSuccess(true);
       })
       .finally(() => {
         setLoading(false);
@@ -25,11 +22,13 @@ export function Login() {
 
   return (
     <div>
+      {success && "You will receive a verification email now."}
       {loading && "Loading..."}
       <Formik
         initialValues={{
           email: "",
-          password: "",
+          password1: "",
+          password2: "",
         }}
         onSubmit={handleSubmit}
       >
@@ -54,7 +53,7 @@ export function Login() {
               )}
             </Field>
 
-            <Field name="password">
+            <Field name="password1">
               {({ field, form }) => (
                 <label className="mt-3 block">
                   <span className="text-gray-700">Password</span>
@@ -64,7 +63,26 @@ export function Login() {
                     className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50"
                     placeholder="Password"
                     style={
-                      form.touched.password && form.errors.password
+                      form.touched.password1 && form.errors.password1
+                        ? { border: "2px solid var(--primary-red" }
+                        : null
+                    }
+                  />
+                </label>
+              )}
+            </Field>
+
+            <Field name="password2">
+              {({ field, form }) => (
+                <label className="mt-3 block">
+                  <span className="text-gray-700">Confirm Password</span>
+                  <input
+                    {...field}
+                    type="password"
+                    className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50"
+                    placeholder="Confirm Password"
+                    style={
+                      form.touched.password2 && form.errors.password2
                         ? { border: "2px solid var(--primary-red" }
                         : null
                     }
