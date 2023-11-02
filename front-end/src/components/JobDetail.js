@@ -25,6 +25,8 @@ export function JobDetail() {
           <h1>{job.title}</h1>
           <h3>{job.salary}</h3>
           <NavLink to={`/jobs/${id}/update`}>Update</NavLink>
+          <br />
+          <NavLink to={`/jobs/${id}/delete`}>Delete</NavLink>
         </div>
       )}
     </div>
