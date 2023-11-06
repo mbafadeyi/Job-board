@@ -16,8 +16,9 @@ import { Navbar } from "./components/Navbar";
 import { Payment } from "./components/Payment";
 import { Signup } from "./components/Signup";
 import { AuthContext, AuthContextProvider } from "./contexts/AuthContext";
+import { Success } from "./components/Success";
 
-function PrivateRoute({children}) {
+function PrivateRoute({ children }) {
   const { user } = useContext(AuthContext);
   return user ? children : <Navigate replace to="/login" />;
 }
@@ -72,7 +73,7 @@ export default function App() {
               />
               <Route path="/login" element={<Login />} exact />
               <Route
-                path="/payment"
+                path="/jobs/:id/sponsor"
                 element={
                   <PrivateRoute>
                     <Payment />
@@ -81,6 +82,7 @@ export default function App() {
                 exact
               />
               <Route path="/signup" element={<Signup />} exact />
+              <Route path="/payment/success" element={<Success />} exact />
               <Route
                 path="/accounts/confirm-email/:key"
                 element={<ConfirmEmail />}

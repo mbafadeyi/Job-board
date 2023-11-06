@@ -57,6 +57,14 @@ export function JobDetail() {
             >
               Update
             </NavLink>
+            {!job.sponsored && (
+              <NavLink
+                to={`/jobs/${id}/sponsor`}
+                className="ml-2 bg-green-400 rounded-md shadow-sm text-lg px-5 py-3 hover:bg-green-500"
+              >
+                Sponsor
+              </NavLink>
+            )}
             <NavLink
               to={`/jobs/${id}/delete`}
               className="ml-2 bg-red-400 rounded-md shadow-sm text-lg px-5 py-3 hover:bg-red-500"
