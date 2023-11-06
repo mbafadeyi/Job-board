@@ -21,6 +21,7 @@ urlpatterns = [
     path("jobs/<pk>/update/", views.JobUpdateView.as_view()),
     path("jobs/<pk>/delete/", views.JobDeleteView.as_view()),
     path("create-job/", views.JobCreateView.as_view()),
+    path("payments/create-payment/", views.CreatePaymentView.as_view()),
 ]
 
 urlpatterns += router.urls

@@ -1,10 +1,11 @@
-import React from "react";
+import React, { useContext } from "react";
 import {
   Navigate,
   Route,
   BrowserRouter as Router,
   Routes,
 } from "react-router-dom";
+import { ConfirmEmail } from "./components/ConfirmEmail";
 import { JobCreate } from "./components/JobCreate";
 import { JobDelete } from "./components/JobDelete";
 import { JobDetail } from "./components/JobDetail";
@@ -12,12 +13,11 @@ import { JobList } from "./components/JobList";
 import { JobUpdate } from "./components/JobUpdate";
 import { Login } from "./components/Login";
 import { Navbar } from "./components/Navbar";
-import { AuthContext, AuthContextProvider } from "./contexts/AuthContext";
-import { useContext } from "react";
+import { Payment } from "./components/Payment";
 import { Signup } from "./components/Signup";
-import { ConfirmEmail } from "./components/ConfirmEmail";
+import { AuthContext, AuthContextProvider } from "./contexts/AuthContext";
 
-function PrivateRoute(children) {
+function PrivateRoute({children}) {
   const { user } = useContext(AuthContext);
   return user ? children : <Navigate replace to="/login" />;
 }
@@ -71,6 +71,15 @@ export default function App() {
                 exact
               />
               <Route path="/login" element={<Login />} exact />
+              <Route
+                path="/payment"
+                element={
+                  <PrivateRoute>
+                    <Payment />
+                  </PrivateRoute>
+                }
+                exact
+              />
               <Route path="/signup" element={<Signup />} exact />
               <Route
                 path="/accounts/confirm-email/:key"
