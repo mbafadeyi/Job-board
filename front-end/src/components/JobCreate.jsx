@@ -1,11 +1,13 @@
 import axios from "axios";
 import { Field, Form, Formik } from "formik";
 import { useContext, useState } from "react";
+import { useNavigate } from "react-router-dom";
 import { API } from "../api";
 import { AuthContext } from "../contexts/AuthContext";
 
 export function JobCreate() {
   const [loading, setLoading] = useState(false);
+  const navigate = useNavigate();
   const {
     user: { token },
   } = useContext(AuthContext);
@@ -19,7 +21,7 @@ export function JobCreate() {
         },
       })
       .then((res) => {
-        console.log(res.data);
+        navigate("/");
       })
       .finally(() => {
         setLoading(false);

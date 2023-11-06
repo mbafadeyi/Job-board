@@ -23,7 +23,7 @@ class JobListView(generics.ListAPIView):
     permission_classes = (AllowAny,)
 
     def get_queryset(self):
-        return Job.objects.filter(available=True)
+        return Job.objects.filter(available=True).order_by("-date_created")
 
 
 class JobCreateView(generics.CreateAPIView):
