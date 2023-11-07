@@ -22,7 +22,6 @@ This project was bootstrapped with Cookiecutter Django. To run this project;
 <p>You can then run the project with <code>python manage.py runserver</code>.</p>
 
 ### Run the frontend with:
-
 <div>
 <p>cd frontend</p>
 <p>npm i</p>
