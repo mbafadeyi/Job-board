@@ -74,6 +74,8 @@ export function JobUpdate() {
             company_website: job.company_website,
             location: job.location,
             salary: job.salary,
+            available: true,
+            remote: false,
           }}
           onSubmit={handleSubmit}
         >
@@ -97,7 +99,6 @@ export function JobUpdate() {
                   </label>
                 )}
               </Field>
-              {/* {touched.title && errors.title && <div>{errors.title}</div>} */}
 
               <Field name="company_name">
                 {({ field, form }) => (
@@ -117,9 +118,6 @@ export function JobUpdate() {
                   </label>
                 )}
               </Field>
-              {/* {touched.company_name && errors.company_name && (
-              <div>{errors.company_name}</div>
-            )} */}
 
               <Field name="company_website">
                 {({ field, form }) => (
@@ -139,9 +137,6 @@ export function JobUpdate() {
                   </label>
                 )}
               </Field>
-              {/* {touched.company_website && errors.company_website && (
-              <div>{errors.company_website}</div>
-            )} */}
 
               <Field name="location">
                 {({ field, form }) => (
@@ -161,9 +156,6 @@ export function JobUpdate() {
                   </label>
                 )}
               </Field>
-              {/* {touched.location && errors.location && (
-              <div>{errors.location}</div>
-            )} */}
 
               <Field name="salary">
                 {({ field, form }) => (
@@ -182,7 +174,52 @@ export function JobUpdate() {
                   </label>
                 )}
               </Field>
-              {/* {touched.salary && errors.salary && <div>{errors.salary}</div>} */}
+
+              <Field name="available">
+                {({ field, form }) => (
+                  <div className="block">
+                    <div className="mt-2">
+                      <label className="inline-flex items-center">
+                        <input
+                          {...field}
+                          type="checkbox"
+                          className="rounded bg-gray-200 border-transparent focus:border-transparent focus:bg-blue-200 text-blue-700 focus:ring-1 focus:ring-offset-2 focus:ring-blue-500"
+                          style={
+                            form.touched.available && form.errors.available
+                              ? { border: "2px solid var(--primary-red" }
+                              : null
+                          }
+                        />
+
+                        <span className="ml-2">Available</span>
+                      </label>
+                    </div>
+                  </div>
+                )}
+              </Field>
+
+              <Field name="remote">
+                {({ field, form }) => (
+                  <div className="block">
+                    <div className="mt-2">
+                      <label className="inline-flex items-center">
+                        <input
+                          {...field}
+                          type="checkbox"
+                          className="rounded bg-gray-200 border-transparent focus:border-transparent focus:bg-blue-200 text-blue-700 focus:ring-1 focus:ring-offset-2 focus:ring-blue-500"
+                          style={
+                            form.touched.remote && form.errors.remote
+                              ? { border: "2px solid var(--primary-red" }
+                              : null
+                          }
+                        />
+
+                        <span className="ml-2">Remote</span>
+                      </label>
+                    </div>
+                  </div>
+                )}
+              </Field>
 
               <button
                 className="text-lg px-5 py-3 shadow-sm bg-blue-400 rounded-md hover:bg-blue-500 mt-3"

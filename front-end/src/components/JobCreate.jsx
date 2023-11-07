@@ -1,12 +1,34 @@
 import axios from "axios";
 import { Field, Form, Formik } from "formik";
-import { useContext, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { API } from "../api";
 import { AuthContext } from "../contexts/AuthContext";
 
+function ImagePreview({ file }) {
+  const [imageSrc, setImageSrc] = useState(null);
+
+  useEffect(() => {
+    const reader = new FileReader();
+    reader.onloadend = () => {
+      setImageSrc(reader.result);
+    };
+    reader.readAsDataURL(file);
+  });
+
+  return (
+    <div>
+      {!imageSrc && "Loading..."}
+      {imageSrc && (
+        <img src={imageSrc} alt={file.name} className="h-20 w-20 p-3" />
+      )}
+    </div>
+  );
+}
+
 export function JobCreate() {
   const [loading, setLoading] = useState(false);
+  const [file, setFile] = useState(null);
   const navigate = useNavigate();
   const {
     user: { token },
@@ -14,8 +36,15 @@ export function JobCreate() {
 
   function handleSubmit(values) {
     setLoading(true);
+    const data = new FormData();
+    data.append("company_logo", file);
+    data.append("title", values.title);
+    data.append("company_name", values.company_name);
+    data.append("company_website", values.company_website);
+    data.append("location", values.location);
+    data.append("salary", values.salary);
     axios
-      .post(API.jobs.create, values, {
+      .post(API.jobs.create, data, {
         headers: {
           Authorization: `Token ${token}`,
         },
@@ -35,6 +64,7 @@ export function JobCreate() {
         initialValues={{
           title: "",
           company_name: "",
+          company_logo: "",
           company_website: "",
           location: "",
           salary: "",
@@ -43,8 +73,6 @@ export function JobCreate() {
       >
         {({ errors, touched }) => (
           <Form>
-            {/* <label htmlFor="title">Title</label>
-            <Field id="title" name="title" placeholder="Software Developer" /> */}
             <Field name="title">
               {({ field, form }) => (
                 <label className="block">
@@ -63,7 +91,6 @@ export function JobCreate() {
                 </label>
               )}
             </Field>
-            {/* {touched.title && errors.title && <div>{errors.title}</div>} */}
 
             <Field name="company_name">
               {({ field, form }) => (
@@ -83,9 +110,18 @@ export function JobCreate() {
                 </label>
               )}
             </Field>
-            {/* {touched.company_name && errors.company_name && (
-              <div>{errors.company_name}</div>
-            )} */}
+
+            <div className="flex items-center">
+              <label className="mt-3 block">
+                <span className="text-gray-700">Company Logo</span>
+                <input
+                  onChange={(e) => setFile(e.target.files[0])}
+                  type="file"
+                  className="mt-1 block w-full rounded-md border-gray-300 focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50"
+                />
+              </label>
+              {file && <ImagePreview file={file} />}
+            </div>
 
             <Field name="company_website">
               {({ field, form }) => (
@@ -105,9 +141,6 @@ export function JobCreate() {
                 </label>
               )}
             </Field>
-            {/* {touched.company_website && errors.company_website && (
-              <div>{errors.company_website}</div>
-            )} */}
 
             <Field name="location">
               {({ field, form }) => (
@@ -127,9 +160,6 @@ export function JobCreate() {
                 </label>
               )}
             </Field>
-            {/* {touched.location && errors.location && (
-              <div>{errors.location}</div>
-            )} */}
 
             <Field name="salary">
               {({ field, form }) => (
@@ -148,7 +178,6 @@ export function JobCreate() {
                 </label>
               )}
             </Field>
-            {/* {touched.salary && errors.salary && <div>{errors.salary}</div>} */}
 
             <button
               className="text-lg px-5 py-3 shadow-sm bg-blue-400 rounded-md hover:bg-blue-500 mt-3"

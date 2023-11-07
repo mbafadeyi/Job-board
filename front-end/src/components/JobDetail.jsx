@@ -1,6 +1,6 @@
 import axios from "axios";
 import { useContext, useEffect, useState } from "react";
-import { NavLink, useNavigate, useParams } from "react-router-dom";
+import { NavLink, useParams } from "react-router-dom";
 import { API } from "../api";
 import { AuthContext } from "../contexts/AuthContext";
 
@@ -34,11 +34,20 @@ export function JobDetail() {
         <div>
           <div className="border border-gray-200 px-3 py-3 shadow-sm rounded-lg">
             <div className="flex items-center justify-between">
-              <NavLink to={`/jobs/${job.id}`}>
-                <h3 className="text-2xl text-gray-800 font-semibold">
-                  {job.title}
-                </h3>
-              </NavLink>
+              <div className="flex items-center">
+                {job.company_logo && (
+                  <img
+                    src={job.company_logo}
+                    alt={job.company_logo}
+                    className="h-20 w-20 p-3"
+                  />
+                )}
+                <NavLink to={`/jobs/${job.id}`}>
+                  <h3 className="text-2xl text-gray-800 font-semibold">
+                    {job.title}
+                  </h3>
+                </NavLink>
+              </div>
               <div className="text-gray-800">
                 Added on {""}
                 {new Date(job.date_created).toDateString()}
