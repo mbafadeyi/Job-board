@@ -7,9 +7,7 @@ import { AuthContext } from "../contexts/AuthContext";
 import { CheckoutForm } from "./CheckoutForm";
 import { useNavigate, useParams } from "react-router-dom";
 
-const stripePromise = loadStripe(
-  "pk_test_51NhN5VJqXa4N3HjAjYPRbY7eB7luu8ICkZxwisR7MN3JQjdkav3eIF1p4YQo2Q1KhmlyBnA7DdkalAYi34PFeE0f00sjZJPcQj"
-);
+const stripePromise = loadStripe("");
 
 export function Payment() {
   const [clientSecret, setClientSecret] = useState("");
