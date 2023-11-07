@@ -1,5 +1,5 @@
 # Job board
- A full-stack job board built with Django Rest Framework and React
+ A full-stack job board built with Django Rest Framework and React.
 
 ## Introduction
 This job board allows authenticated users to post jobs which can be sponsored for more visibility on the website. The paid sponsorship is handled by Stripe. The Cross-Origin Resource Sharing (CORS) was properly configured for security. The overall style was designed with TailwindCSS.
