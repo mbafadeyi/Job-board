@@ -2,17 +2,3 @@
 # ------------------------------------------------------------------------------
 USE_DOCKER=yes
 IPYTHONDIR=/app/.ipython
-DJANGO_SECRET_KEY="LU3mkWZX6EYhCUekmMq374sADfkiz2e5K9CAy1XeTcIFR5LyBcb7JPmBTKEQVO35"
-DJANGO_DEBUG=True
-# ------------------------------------------------------------------------------
-POSTGRES_HOST=localhost
-POSTGRES_PORT=5432
-POSTGRES_DB=job_db
-POSTGRES_USER=postgres
-POSTGRES_PASSWORD=Mayorlee007+
-DATABASE_URL=postgres://postgres:Mayorlee007+@127.0.0.1:5432/job_db
-
-
-STRIPE_SECRET_KEY=sk_test_51NhN5VJqXa4N3HjAckCgVdYzejYnKLZhgRHJED4fniOIxMt058MANZSDSafc0qnFunAe7Frte0VgivfsSUM6JBuK00ng5VcijK
-STRIPE_PUBLIC_KEY=pk_test_51NhN5VJqXa4N3HjAjYPRbY7eB7luu8ICkZxwisR7MN3JQjdkav3eIF1p4YQo2Q1KhmlyBnA7DdkalAYi34PFeE0f00sjZJPcQj
-STRIPE_WEBHOOK_SECRET=whsec_1f29c5aaa406790b548acbd9b9408597097cd9596d2ae859093f6cf0d69d61db
