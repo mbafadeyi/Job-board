@@ -5,7 +5,7 @@ import { API } from "../api";
 import axios from "axios";
 import { AuthContext } from "../contexts/AuthContext";
 import { CheckoutForm } from "./CheckoutForm";
-import { useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 
 const stripePromise = loadStripe(
   "pk_test_51NhN5VJqXa4N3HjAjYPRbY7eB7luu8ICkZxwisR7MN3JQjdkav3eIF1p4YQo2Q1KhmlyBnA7DdkalAYi34PFeE0f00sjZJPcQj"
@@ -15,11 +15,33 @@ export function Payment() {
   const [clientSecret, setClientSecret] = useState("");
   const [canSponsor, setCanSponsor] = useState(false);
   const { id } = useParams();
+  const navigate = useNavigate();
+  const [job, setJob] = useState(null);
   const {
     user: { token },
   } = useContext(AuthContext);
 
   useEffect(() => {
+    if (job && !job.is_owner) {
+      navigate("/");
+    }
+    return () => null;
+  });
+
+  useEffect(() => {
+    async function fetchJob() {
+      try {
+        const res = await axios.get(API.jobs.retrieve(id), {
+          headers: {
+            Authorization: `Token ${token}`,
+          },
+        });
+        setJob(res.data);
+      } catch (e) {
+        console.log(e);
+      }
+    }
+
     // Create PaymentIntent as soon as the page loads
     async function createPayment() {
       try {
@@ -51,7 +73,11 @@ export function Payment() {
       }
     }
 
+    fetchJob();
     createPayment();
+    fetchSponsoredJobCount();
+
+    return () => null;
   }, [token, id]);
 
   const appearance = {

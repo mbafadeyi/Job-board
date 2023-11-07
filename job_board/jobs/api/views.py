@@ -12,6 +12,7 @@ from rest_framework.views import APIView
 
 from job_board.jobs.models import Job, SponsoredJobPost
 
+from .permissions import IsJobOwner
 from .serializers import JobSerializer
 
 # This is a public sample test API key.
@@ -19,31 +20,31 @@ stripe.api_key = settings.STRIPE_SECRET_KEY
 
 
 class JobListView(generics.ListAPIView):
-    serializer_class = JobSerializer
     permission_classes = (AllowAny,)
+    serializer_class = JobSerializer
 
     def get_queryset(self):
         return Job.objects.filter(available=True).order_by("-date_created")
 
 
 class JobCreateView(generics.CreateAPIView):
-    serializer_class = JobSerializer
     permission_classes = (IsAuthenticated,)
+    serializer_class = JobSerializer
 
     def perform_create(self, serializer):
         serializer.save(user=self.request.user)
 
 
 class JobDetailView(generics.RetrieveAPIView):
-    serializer_class = JobSerializer
     permission_classes = (AllowAny,)
+    serializer_class = JobSerializer
 
     def get_queryset(self):
         return Job.objects.all()
 
 
 class JobUpdateView(generics.UpdateAPIView):
-    permission_classes = (AllowAny,)
+    permission_classes = (IsAuthenticated, IsJobOwner)
     serializer_class = JobSerializer
 
     def get_queryset(self):
@@ -51,7 +52,7 @@ class JobUpdateView(generics.UpdateAPIView):
 
 
 class JobDeleteView(generics.DestroyAPIView):
-    permission_classes = (AllowAny,)
+    permission_classes = (IsAuthenticated, IsJobOwner)
 
     def get_queryset(self):
         return Job.objects.all()
@@ -64,6 +65,8 @@ class SponsoredJobCountView(APIView):
 
 
 class CreatePaymentView(APIView):
+    permission_classes = (IsAuthenticated, IsJobOwner)
+
     def post(self, request, *args, **kwargs):
         try:
             # Create a PaymentIntent with the order amount and currency

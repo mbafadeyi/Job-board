@@ -1,21 +1,31 @@
 import axios from "axios";
-import { useEffect, useState } from "react";
-import { NavLink, useParams } from "react-router-dom";
+import { useContext, useEffect, useState } from "react";
+import { NavLink, useNavigate, useParams } from "react-router-dom";
 import { API } from "../api";
+import { AuthContext } from "../contexts/AuthContext";
 
 export function JobDetail() {
   const [job, setJob] = useState(null);
   const { id } = useParams();
+  const {
+    user: { token },
+  } = useContext(AuthContext);
 
   useEffect(() => {
     function fetchJob() {
-      axios.get(API.jobs.retrieve(id)).then((res) => {
-        console.log(res.data);
-        setJob(res.data);
-      });
+      axios
+        .get(API.jobs.retrieve(id), {
+          headers: {
+            Authorization: `Token ${token}`,
+          },
+        })
+        .then((res) => {
+          console.log(res.data);
+          setJob(res.data);
+        });
     }
     fetchJob();
-  }, [id]);
+  }, [id, token]);
 
   return (
     <div>
@@ -50,28 +60,30 @@ export function JobDetail() {
             {job.location && <p className="text-gray-500">{job.location}</p>}
             <p>{job.description}</p>
           </div>
-          <div className="mt-3 flex items-center">
-            <NavLink
-              to={`/jobs/${id}/update`}
-              className="bg-blue-400 rounded-md shadow-sm text-lg px-5 py-3 hover:bg-blue-500"
-            >
-              Update
-            </NavLink>
-            {!job.sponsored && (
+          {job.is_owner && (
+            <div className="mt-3 flex items-center">
               <NavLink
-                to={`/jobs/${id}/sponsor`}
-                className="ml-2 bg-green-400 rounded-md shadow-sm text-lg px-5 py-3 hover:bg-green-500"
+                to={`/jobs/${id}/update`}
+                className="bg-blue-400 rounded-md shadow-sm text-lg px-5 py-3 hover:bg-blue-500"
               >
-                Sponsor
+                Update
               </NavLink>
-            )}
-            <NavLink
-              to={`/jobs/${id}/delete`}
-              className="ml-2 bg-red-400 rounded-md shadow-sm text-lg px-5 py-3 hover:bg-red-500"
-            >
-              Delete
-            </NavLink>
-          </div>
+              {!job.sponsored && (
+                <NavLink
+                  to={`/jobs/${id}/sponsor`}
+                  className="ml-2 bg-green-400 rounded-md shadow-sm text-lg px-5 py-3 hover:bg-green-500"
+                >
+                  Sponsor
+                </NavLink>
+              )}
+              <NavLink
+                to={`/jobs/${id}/delete`}
+                className="ml-2 bg-red-400 rounded-md shadow-sm text-lg px-5 py-3 hover:bg-red-500"
+              >
+                Delete
+              </NavLink>
+            </div>
+          )}
         </div>
       )}
     </div>
